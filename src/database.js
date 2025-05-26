@@ -58,7 +58,7 @@ async function register(body) {
 
 async function getThemes() {
     const [themes] = await global.connection.promise().query(
-        'SELECT name FROM Themes'
+        'SELECT id, name FROM Themes'
     )
 
     return themes

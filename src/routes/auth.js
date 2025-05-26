@@ -28,7 +28,7 @@ router.post('/login', async function(req, res, next) {
     const user = await global.db.login(email, password);
 
     if (user.error) {
-        return res.render('cadastro_login', {
+        return res.status(400).render('cadastro_login', {
             title: 'Quizzes', 
             formType: 'login', 
             error: user.error
