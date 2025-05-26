@@ -1,5 +1,5 @@
 const request = require('supertest');
-var app = require('../src/app');
+var app = require('../app');
 
 describe('Authentication Routes', () => {
     describe('GET /auth/register', () => {
