@@ -16,7 +16,7 @@ async function connectDb() {
 async function login(email, password) {
     try {
         const [users] = await global.connection.promise().query(
-            'SELECT * FROM users WHERE email = ? AND password = ?',
+            'SELECT * FROM Users WHERE email = ? AND password = ?',
             [email, password]
         );
 

@@ -2,7 +2,7 @@ require('dotenv').config();
 
 global.db = require('../database.js');
 
-var app = require('../app');
+var app = require('../app.js');
 var debug = require('debug')('quizzes:server');
 var http = require('http');
 
