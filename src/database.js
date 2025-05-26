@@ -65,9 +65,17 @@ async function getThemes() {
 }
 
 async function getQuizzes() {
-    const [quizzes] = await global.connection.promise().query(
-        'SELECT id, title FROM Quizzes'
-    )
+    const [quizzes] = await global.connection.promise().query(`
+        SELECT 
+            q.id, 
+            q.title,
+            q.theme_id,
+            t.name
+        FROM Quizzes AS q
+        INNER JOIN Themes AS t ON t.id = q.theme_id
+        INNER JOIN Users AS u ON u.id = q.created_by_id
+        ORDER BY q.created_at
+    `)
 
     return quizzes
 }
@@ -76,5 +84,6 @@ module.exports = {
     connectDb, 
     login, 
     register, 
-    getThemes
+    getThemes,
+    getQuizzes
 };

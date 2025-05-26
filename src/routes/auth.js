@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/register', function(req, res, next) {
-    res.render('cadastro_login', { title: 'Quizzes', formType: 'register' });
+    res.render('auth', { title: 'Quizzes', formType: 'register' });
 });
 
 router.post('/register', async function(req, res, next) {
     const result = await global.db.register(req.body);
 
     if (result.error) {
-        return res.status(400).render('cadastro_login', {
+        return res.status(400).render('auth', {
             title: 'Quizzes',
             formType: 'register',
             error: result.error
@@ -20,7 +20,7 @@ router.post('/register', async function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('cadastro_login', { title: 'Quizzes', formType: 'login' });
+    res.render('auth', { title: 'Quizzes', formType: 'login' });
 });
 
 router.post('/login', async function(req, res, next) {
@@ -28,7 +28,7 @@ router.post('/login', async function(req, res, next) {
     const user = await global.db.login(email, password);
 
     if (user.error) {
-        return res.status(400).render('cadastro_login', {
+        return res.status(400).render('auth', {
             title: 'Quizzes', 
             formType: 'login', 
             error: user.error

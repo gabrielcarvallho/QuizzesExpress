@@ -28,15 +28,34 @@
             </div>
         </header>
 
-        <main>
+        <main class="container-fluid">
             <section class="themes">
                 <h2>Temas</h2>
                 <div class="theme-icons-container text-center mb-3">
-
                     <%themes.forEach(theme => { %>
                         <a href="/?theme=<%= theme.id %>" class="theme-link btn btn-primary">
                             <%= theme.name %>
                         </a>
+                    <% }); %>
+                </div>
+            </section>
+
+            <section class="quizzes">
+                <h2>Radar de Novidades</h2>
+                
+                <div class="row">
+                    <%quizzes.forEach(quizz => { %>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="quiz-card">
+                                <h3 class="quiz-card-title px-3">
+                                    <%= quizz.title %>
+                                </h3>
+                                <a href="/?quizz=<%= quizz.id %>" class="quizz-link btn play-btn">
+                                    <i class="fas fa-play me-2"></i>
+                                    Jogar
+                                </a>
+                            </div>
+                        </div>
                     <% }); %>
                 </div>
             </section>
