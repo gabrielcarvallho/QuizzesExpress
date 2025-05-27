@@ -96,6 +96,60 @@ h2 {
     color: white !important;
 }
 
+.user-menu {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.user-icon {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.user-icon:hover {
+    color: #007bff;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 20px;
+    min-width: 250px;
+    width: 280px;
+    z-index: 1000;
+    margin-top: 8px;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdown-menu p {
+    margin: 0 0 8px 0;
+    color: #333;
+    padding: 0 10px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 0;
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+    border-top: 1px solid #eee;
+    margin-top: 8px;
+    padding: 0 10px;
+}
+
+.dropdown-menu a:hover {
+    color: #0056b3;
+}
+
 .themes {
     width: 100%;
     max-width: 1200px;

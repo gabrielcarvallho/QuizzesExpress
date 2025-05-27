@@ -64,6 +64,17 @@ async function getThemes() {
     return themes
 }
 
+async function createTheme(body) {
+    const { name } = body;
+
+    await global.connection.promise().query(
+        'INSERT INTO Themes (name) VALUES (?)',
+        [name]
+    );
+
+    return { success: 'Theme created successfully' };
+}
+
 async function getQuizzes() {
     const [quizzes] = await global.connection.promise().query(`
         SELECT 
@@ -85,5 +96,6 @@ module.exports = {
     login, 
     register, 
     getThemes,
+    createTheme,
     getQuizzes
 };

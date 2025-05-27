@@ -1,0 +1,28 @@
+<header>
+    <a href="/"><img src="/images/logo.png" alt="Logo da Empresa" class="logo"></a>
+
+    <div class="header-right">
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/quizz/create">Criar</a>
+        </nav>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Pesquise no Quizze's">
+        </div>
+
+        <% if (session && session.user) { %>
+            <div class="user-menu">
+                <i class="fas fa-user-circle fa-2x user-icon" onclick="toggleUserMenu()"></i>
+                <div id="userDropdown" class="dropdown-menu hidden">
+                    <p><strong><%= session.user.username %></strong></p>
+                    <p><%= session.user.email %></p>
+                    <a href="/auth/logout">Logout</a>
+                </div>
+            </div>            
+        <% } else { %>
+            <a href="/auth/login" class="btn btn-outline-primary" role="button" aria-pressed="true">Login</a>
+        <% } %>
+    </div>
+</header>

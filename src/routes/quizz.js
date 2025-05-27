@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async function(req, res, next) {
-    const themes = await global.db.getThemes();
-    const quizzes = await global.db.getQuizzes();
-    
-    res.render('index', { 
-        title: 'Quizzes',
-        themes: themes,
-        quizzes: quizzes
+const { requireAuth } = require('../middleware/authMiddleware');
+const session = require('express-session');
+
+router.get('/create', requireAuth, async function(req, res, next) {
+    res.render('pages/createQuizz', {
+        title: 'Create Quizz',
+        session: req.session
     });
-});
+})
 
 module.exports = router;
