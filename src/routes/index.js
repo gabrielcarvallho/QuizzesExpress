@@ -3,17 +3,16 @@ const router = express.Router();
 
 const auth = require('./auth');
 const quizz = require('./quizz');
-const session = require('express-session');
 
 router.get('/', async function(req, res, next) {
     const themes = await global.db.getThemes();
     const quizzes = await global.db.getQuizzes();
     
-    res.render('pages/home', { 
-        title: 'Quizzes',
+    res.render('pages/home', {
         session: req.session,
         themes: themes,
-        quizzes: quizzes
+        quizzes: quizzes,
+        hideHeader: false
     });
 });
 

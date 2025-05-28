@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <%- include('../components/head') %>
-    </head>
-
-    <body>
+<html lang="pt-BR">
+<head>
+    <%- include('../components/head') %>
+</head>
+<body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : '' %>">
+    <% if (typeof hideHeader === 'undefined' || !hideHeader) { %>
         <%- include('../components/header') %>
-
-        <main class="main-content">
-            <%- body %>
-        </main>
-
-        <script src="/js/script.js"></script>
-    </body>
+    <% } %>
+    
+    <main class="<%= typeof mainClass !== 'undefined' ? mainClass : 'main-content' %>">
+        <%- typeof body !== 'undefined' ? body : '' %>
+        <%- typeof content !== 'undefined' ? content : '' %>
+    </main>
+    
+    <script src="/js/main.js"></script>
+    <%- typeof extraJS !== 'undefined' ? extraJS : '' %>
+</body>
 </html>

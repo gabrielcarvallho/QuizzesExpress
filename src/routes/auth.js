@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/register', function(req, res, next) {
-    res.render('pages/auth', { title: 'Quizzes', formType: 'register' });
+    res.render('pages/auth', { 
+        formType: 'register',
+        hideHeader: true,
+        pageCSS: ['/stylesheets/login.css'],
+    });
 });
 
 router.post('/register', async function(req, res, next) {
@@ -10,9 +14,10 @@ router.post('/register', async function(req, res, next) {
 
     if (result.error) {
         return res.status(400).render('pages/auth', {
-            title: 'Quizzes',
             formType: 'register',
-            error: result.error
+            error: result.error,
+            hideHeader: true,
+            pageCSS: ['/stylesheets/login.css']
         });
     }
 
@@ -20,7 +25,11 @@ router.post('/register', async function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('pages/auth', { title: 'Quizzes', formType: 'login' });
+    res.render('pages/auth', { 
+        formType: 'login',
+        hideHeader: true,
+        pageCSS: ['/stylesheets/login.css']
+    });
 });
 
 router.post('/login', async function(req, res, next) {
@@ -29,9 +38,10 @@ router.post('/login', async function(req, res, next) {
 
     if (user.error) {
         return res.status(400).render('pages/auth', {
-            title: 'Quizzes', 
             formType: 'login', 
-            error: user.error
+            error: user.error,
+            hideHeader: true,
+            pageCSS: ['/stylesheets/login.css']
         });
     }
 
