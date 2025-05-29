@@ -10,7 +10,7 @@ router.get('/create', requireAuth, async function(req, res, next) {
         res.render('pages/createQuiz', {
             themes: themes,
             mainClass: 'main-content creator-layout',
-            pageCSS: ['/stylesheets/create.css'],
+            pageCSS: ['/stylesheets/createQuiz.css'],
         });
     } catch (error) {
         console.error('Erro interno do servidor: ', error);
@@ -35,11 +35,26 @@ router.post('/create', requireAuth, async function(req, res, next) {
         return res.status(500).render('pages/createQuiz', {
             themes: await global.db.getThemes(),
             mainClass: 'main-content creator-layout',
-            pageCSS: ['/stylesheets/create.css'],
+            pageCSS: ['/stylesheets/createQuiz.css'],
             error: 'Erro ao criar quiz. Tente novamente.',
             formData: req.body
         });
     }
 });
+
+router.get('/:quizId', async function(req, res, next) {
+    try {
+        const { quizId } = req.params
+        const quiz = await global.db.getQuizById(quizId);
+
+        res.render('pages/quiz', {
+            quiz: quiz,
+            pageCSS: ['/stylesheets/quiz.css']
+        });
+    } catch (error) {
+        console.error('Erro interno do servidor: ', error);
+        return res.status(500).send('Erro interno do servidor');
+    }
+})
 
 module.exports = router;

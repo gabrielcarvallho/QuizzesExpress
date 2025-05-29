@@ -32,7 +32,7 @@ CREATE TABLE Answers (
     question_id INT NOT NULL,
     answer_text TEXT NOT NULL,
     is_correct BOOLEAN NOT NULL,
-    FOREIGN KEY (question_id) REFERENCES Questions(id)
+    FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE QuizzQuestions (
@@ -40,6 +40,17 @@ CREATE TABLE QuizzQuestions (
     question_id INT NOT NULL,
     question_order INT NOT NULL,
     PRIMARY KEY (quiz_id, question_order),
-    FOREIGN KEY (quiz_id) REFERENCES Quizzes(id),
-    FOREIGN KEY (question_id) REFERENCES Questions(id)
+    FOREIGN KEY (quiz_id) REFERENCES Quizzes(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE
 );
+
+INSERT INTO Themes (name) VALUES
+('Ciência'),
+('História'),
+('Esportes'),
+('Música'),
+('Cinema'),
+('Literatura'),
+('Tecnologia'),
+('Artes'),
+('Matemática');

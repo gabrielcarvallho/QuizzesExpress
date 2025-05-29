@@ -82,7 +82,13 @@ async function getQuizzes() {
 
 async function getQuizById(quizId) {
     const [rows] = await global.connection.promise().query(`
-        SELECT q.*, t.name as theme_name
+        SELECT 
+            q.id, 
+            q.title,
+            t.name AS theme_name,
+            q.created_by_id,
+            u.username,
+            q.created_at
         FROM Quizzes q
         JOIN Themes t ON q.theme_id = t.id
         JOIN Users u ON q.created_by_id = u.id

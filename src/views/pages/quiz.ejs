@@ -1,0 +1,58 @@
+<div class="quiz-container">
+    <div class="quiz-header">
+        <div class="quiz-info">
+            <h1><%= quiz.title %></h1>
+            <div class="quiz-meta">
+                <span class="quiz-theme">
+                    <i class="fas fa-tag"></i>
+                    <%= quiz.theme_name %>
+                </span>
+                <span class="quiz-author">
+                    <i class="fas fa-user"></i>
+                    Criado por: <%= quiz.username %>
+                </span>
+                <span class="quiz-date">
+                    <i class="fas fa-calendar"></i>
+                    <%= new Date(quiz.created_at).toLocaleDateString('pt-BR') %>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz-content">
+        <div class="quiz-description">
+            <h2>Sobre este Quiz</h2>
+            <p>Teste seus conhecimentos sobre <strong><%= quiz.theme_name %></strong> com este quiz criado por <strong><%= quiz.username %></strong>.</p>
+        </div>
+
+        <div class="quiz-stats">
+            <div class="stat-item">
+                <div class="stat-number" id="question-count">-</div>
+                <div class="stat-label">Perguntas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Min. estimado</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">Múltipla</div>
+                <div class="stat-label">Escolha</div>
+            </div>
+        </div>
+
+        <div class="quiz-actions">
+            <button onclick="startQuiz()" class="btn btn-primary btn-large">
+                <i class="fas fa-play"></i>
+                Iniciar Quiz
+            </button>
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Voltar
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizId = '<%= quiz.id %>';
+</script>
