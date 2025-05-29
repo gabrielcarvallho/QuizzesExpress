@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
     <%- include('../components/head') %>
-</head>
-<body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : '' %>">
-    <% if (typeof hideHeader === 'undefined' || !hideHeader) { %>
-        <%- include('../components/header') %>
-    <% } %>
-    
-    <main class="<%= typeof mainClass !== 'undefined' ? mainClass : 'main-content' %>">
-        <%- typeof body !== 'undefined' ? body : '' %>
-        <%- typeof content !== 'undefined' ? content : '' %>
-    </main>
-    
-    <script src="/js/main.js"></script>
-    <%- typeof extraJS !== 'undefined' ? extraJS : '' %>
-</body>
+
+    <body>
+        <% if (typeof hideHeader === 'undefined' || !hideHeader) { %>
+            <%- include('../components/header') %>
+        <% } %>
+        
+        <main class="<%= typeof mainClass !== 'undefined' ? mainClass : 'main-content' %>">
+            <%- typeof body !== 'undefined' ? body : '' %>
+            <%- typeof content !== 'undefined' ? content : '' %>
+        </main>
+        
+        <% if (typeof skipMainJS === 'undefined' || !skipMainJS) { %>
+            <script src="/js/main.js"></script>
+        <% } %>
+
+        <% if (typeof pageJS !== 'undefined') { %>
+            <% pageJS.forEach(function(js) { %>
+                <script src="<%= js %>"></script>
+            <% }); %>
+        <% } %>
+    </body>
 </html>

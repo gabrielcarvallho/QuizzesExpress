@@ -29,6 +29,11 @@ app.use(session({
     cookie: { secure: false }
 }));
 
+app.use((req, res, next) => {
+    res.locals.session = req.session || null;
+    next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
@@ -41,7 +46,7 @@ app.use(function(err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     res.status(err.status || 500);
-    res.render('error');
+    res.render('pages/error');
 });
 
 module.exports = app;

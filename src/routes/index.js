@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('./auth');
-const quizz = require('./quizz');
+const quiz = require('./quiz');
+const questions = require('./questions')
 
 router.get('/', async function(req, res, next) {
     const themes = await global.db.getThemes();
     const quizzes = await global.db.getQuizzes();
     
     res.render('pages/home', {
-        session: req.session,
         themes: themes,
         quizzes: quizzes,
         hideHeader: false
@@ -17,6 +17,7 @@ router.get('/', async function(req, res, next) {
 });
 
 router.use('/auth', auth);
-router.use('/quizz', quizz);
+router.use('/quiz', quiz);
+router.use('/questions', questions);
 
 module.exports = router;

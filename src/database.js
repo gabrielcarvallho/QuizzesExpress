@@ -28,7 +28,7 @@ async function login(email, password) {
     } catch (error) {
         console.error('Erro no login:', error);
         return { error: 'Erro ao fazer login' };
-    }
+    };
 }
 
 async function register(body) {
@@ -59,20 +59,9 @@ async function register(body) {
 async function getThemes() {
     const [themes] = await global.connection.promise().query(
         'SELECT id, name FROM Themes'
-    )
-
-    return themes
-}
-
-async function createTheme(body) {
-    const { name } = body;
-
-    await global.connection.promise().query(
-        'INSERT INTO Themes (name) VALUES (?)',
-        [name]
     );
 
-    return { success: 'Theme created successfully' };
+    return themes;
 }
 
 async function getQuizzes() {
@@ -86,9 +75,55 @@ async function getQuizzes() {
         INNER JOIN Themes AS t ON t.id = q.theme_id
         INNER JOIN Users AS u ON u.id = q.created_by_id
         ORDER BY q.created_at
-    `)
+    `);
 
-    return quizzes
+    return quizzes;
+}
+
+async function getQuizById(quizId) {
+    const [rows] = await global.connection.promise().query(`
+        SELECT q.*, t.name as theme_name
+        FROM Quizzes q
+        JOIN Themes t ON q.theme_id = t.id
+        JOIN Users u ON q.created_by_id = u.id
+        WHERE q.id = ?
+    `, [quizId]);
+
+    return rows[0];
+}
+
+async function createQuiz(data) {
+    const [result] = await global.connection.promise().query(
+        'INSERT INTO Quizzes (title, theme_id, created_by_id) VALUES (?, ?, ?)',
+        [data.title, data.theme_id, data.created_by_id]
+    );
+
+    return result.insertId;
+}
+
+async function createQuestion(questionText) {
+    const [result] = await global.connection.promise().query(
+        'INSERT INTO Questions (question_text) VALUES (?)',
+        [questionText]
+    )
+
+    return result.insertId
+}
+
+async function createAnswer(data) {
+    await global.connection.promise().query(
+        'INSERT INTO Answers (question_id, answer_text, is_correct) VALUES (?, ?, ?)',
+        [data.questionId, data.answerText, data.isCorrect]
+    )
+}
+
+async function addQuestionToQuiz(data) {
+    const orderQuery = 'SELECT COALESCE(MAX(question_order), 0) + 1 as next_order FROM QuizzQuestions WHERE quiz_id = ?';
+    const [orderResult] = await global.connection.promise().query(orderQuery, [data.quizId]);
+    const nextOrder = orderResult[0].next_order;
+
+    const query = 'INSERT INTO QuizzQuestions (quiz_id, question_id, question_order) VALUES (?, ?, ?)';
+    await global.connection.promise().query(query, [data.quizId, data.questionId, nextOrder]);
 }
 
 module.exports = { 
@@ -96,6 +131,10 @@ module.exports = {
     login, 
     register, 
     getThemes,
-    createTheme,
-    getQuizzes
+    getQuizById,
+    getQuizzes,
+    createQuiz,
+    createQuestion,
+    createAnswer,
+    addQuestionToQuiz
 };

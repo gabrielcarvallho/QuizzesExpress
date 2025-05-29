@@ -1,0 +1,52 @@
+<div class="quiz-creator-container">
+    <div class="creator-header">
+        <h1>Criar Novo Quiz</h1>
+        <p>Preencha as informações básicas do seu quiz</p>
+    </div>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-message">
+            <%= error %>
+        </div>
+    <% } %>
+    
+    <form class="quiz-form" action="/quiz/create" method="POST">
+        <div class="form-section">
+            <h3>Informações Básicas</h3>
+            
+            <div class="form-group">
+                <label for="title">Título do Quiz *</label>
+                <input 
+                    type="text" 
+                    id="title" 
+                    name="title" 
+                    class="form-control"
+                    placeholder="Ex: Quiz de Geografia do Brasil"
+                    value="<%= typeof formData !== 'undefined' ? formData.title || '' : '' %>"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="theme_id">Tema do Quiz *</label>
+                <select id="theme_id" name="theme_id" class="form-control" required>
+                    <option value="">Selecione um tema</option>
+                    <% themes.forEach(theme => { %>
+                        <option value="<%= theme.id %>" 
+                                <%= typeof formData !== 'undefined' && formData.theme_id == theme.id ? 'selected' : '' %>>
+                            <%= theme.name %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i>
+                Continuar para Perguntas
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,65 @@
+<div class="quiz-creator-container">
+    <div class="creator-header">
+        <h1>Adicionar Perguntas</h1>
+        <p>Quiz: <strong><%= quiz.title %></strong></p>
+    </div>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-message">
+            <%= error %>
+        </div>
+    <% } %>
+    
+    <!-- Lista de perguntas já adicionadas -->
+    <div class="questions-summary">
+        <h3>Perguntas Adicionadas: <span id="question-count">0</span></h3>
+        <div id="questions-list" class="questions-preview">
+            <!-- Perguntas serão listadas aqui -->
+        </div>
+    </div>
+    
+    <!-- Formulário para nova pergunta -->
+    <form class="quiz-form" id="question-form">
+        <div class="form-section">
+            <h3>Nova Pergunta</h3>
+            
+            <div class="form-group">
+                <label for="question-text">Texto da Pergunta *</label>
+                <textarea 
+                    id="question-text" 
+                    name="question_text" 
+                    class="form-control"
+                    rows="3"
+                    placeholder="Digite sua pergunta aqui..."
+                    required
+                ></textarea>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Respostas</h3>
+            <div id="answers-container">
+                <!-- Respostas serão adicionadas dinamicamente -->
+            </div>
+            <button type="button" id="add-answer-btn" class="btn btn-secondary">
+                <i class="fas fa-plus"></i>
+                Adicionar Resposta
+            </button>
+        </div>
+        
+        <div class="form-actions">
+            <button type="button" id="add-question-btn" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Adicionar Pergunta
+            </button>
+            <button type="button" id="finish-quiz-btn" class="btn btn-success">
+                <i class="fas fa-check"></i>
+                Finalizar Quiz
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    window.quizId = '<%= quiz.id %>';
+</script>

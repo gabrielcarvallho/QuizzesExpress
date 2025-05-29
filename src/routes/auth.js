@@ -5,7 +5,9 @@ router.get('/register', function(req, res, next) {
     res.render('pages/auth', { 
         formType: 'register',
         hideHeader: true,
-        pageCSS: ['/stylesheets/login.css'],
+        skipMainCSS: true,
+        skipMainJS: true,
+        pageCSS: ['/stylesheets/auth.css'],
     });
 });
 
@@ -17,7 +19,9 @@ router.post('/register', async function(req, res, next) {
             formType: 'register',
             error: result.error,
             hideHeader: true,
-            pageCSS: ['/stylesheets/login.css']
+            skipMainCSS: true,
+            skipMainJS: true,
+            pageCSS: ['/stylesheets/auth.css']
         });
     }
 
@@ -28,7 +32,9 @@ router.get('/login', function(req, res, next) {
     res.render('pages/auth', { 
         formType: 'login',
         hideHeader: true,
-        pageCSS: ['/stylesheets/login.css']
+        skipMainCSS: true,
+        skipMainJS: true,
+        pageCSS: ['/stylesheets/auth.css']
     });
 });
 
@@ -41,7 +47,9 @@ router.post('/login', async function(req, res, next) {
             formType: 'login', 
             error: user.error,
             hideHeader: true,
-            pageCSS: ['/stylesheets/login.css']
+            skipMainCSS: true,
+            skipMainJS: true,
+            pageCSS: ['/stylesheets/auth.css']
         });
     }
 
