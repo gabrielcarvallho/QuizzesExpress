@@ -42,6 +42,45 @@ router.post('/create', requireAuth, async function(req, res, next) {
     }
 });
 
+router.post('/:quizId/submit', async function(req, res, next) {
+    try {
+        const { quizId } = req.params;
+        const { answers, userId, timeTaken } = req.body;
+
+        const correctAnswers = await global.db.getCorrectAnswers(quizId);
+
+        let score = 0;
+        const totalQuestions = correctAnswers.length;
+        
+        answers.forEach(userAnswer => {
+            const correctAnswer = correctAnswers.find(ca => ca.question_id === userAnswer.questionId);
+            if (correctAnswer && correctAnswer.correct_answer_id === userAnswer.answerId) {
+                score++;
+            }
+        });
+
+        const resultId = await global.db.saveQuizResult({
+            userId,
+            quizId,
+            score,
+            totalQuestions,
+            timeTaken
+        });
+
+        res.json({
+            success: true,
+            score,
+            totalQuestions,
+            percentage: Math.round((score / totalQuestions) * 100),
+            resultId
+        });
+        
+    } catch (error) {
+        console.error('Erro ao processar quiz:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+});
+
 router.get('/:quizId', async function(req, res, next) {
     try {
         const { quizId } = req.params

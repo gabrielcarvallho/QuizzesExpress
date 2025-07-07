@@ -132,6 +132,54 @@ async function addQuestionToQuiz(data) {
     await global.connection.promise().query(query, [data.quizId, data.questionId, nextOrder]);
 }
 
+async function getCorrectAnswers(quizId) {
+    const query = `
+        SELECT 
+            qq.question_id,
+            a.id as correct_answer_id
+        FROM QuizzQuestions qq
+        JOIN Questions q ON qq.question_id = q.id
+        JOIN Answers a ON q.id = a.question_id
+        WHERE qq.quiz_id = ? AND a.is_correct = true
+        ORDER BY qq.question_order
+    `;
+    
+    return await db.query(query, [quizId]);
+}
+
+async function saveQuizResult(resultData) {
+    const query = `
+        INSERT INTO QuizResults (user_id, quiz_id, score, total_questions, time_taken)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+    
+    const result = await db.query(query, [
+        resultData.userId,
+        resultData.quizId,
+        resultData.score,
+        resultData.totalQuestions,
+        resultData.timeTaken
+    ]);
+    
+    return result.insertId;
+}
+
+async function getUserQuizHistory(userId) {
+    const query = `
+        SELECT 
+            qr.*,
+            q.title as quiz_title,
+            t.name as theme_name
+        FROM QuizResults qr
+        JOIN Quizzes q ON qr.quiz_id = q.id
+        JOIN Themes t ON q.theme_id = t.id
+        WHERE qr.user_id = ?
+        ORDER BY qr.completed_at DESC
+    `;
+    
+    return await db.query(query, [userId]);
+}
+
 module.exports = { 
     connectDb, 
     login, 
@@ -142,5 +190,8 @@ module.exports = {
     createQuiz,
     createQuestion,
     createAnswer,
-    addQuestionToQuiz
+    addQuestionToQuiz,
+    getCorrectAnswers,
+    saveQuizResult,
+    getUserQuizHistory
 };
